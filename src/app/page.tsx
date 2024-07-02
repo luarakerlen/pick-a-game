@@ -45,7 +45,7 @@ export default function Home() {
 			)}
 
 			<div className={styles.available}>
-				<h1>Jogos disponíveis ({availableGames.length}):</h1>
+				<h1 className={styles.sectionTitle}>Jogos disponíveis ({availableGames.length}):</h1>
 				<ul className={styles.availableList}>
 					{availableGames.map((game) => (
 						<CardAvailable
@@ -59,7 +59,7 @@ export default function Home() {
 
 			{unavailableGames.length > 0 && (
 				<div className={styles.available}>
-					<h1>
+					<h1 className={styles.sectionTitle}>
 						Jogos que não devem ser escolhidos ({unavailableGames.length}):
 					</h1>
 					<ul className={styles.availableList}>

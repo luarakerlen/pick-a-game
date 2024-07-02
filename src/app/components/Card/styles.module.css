@@ -56,11 +56,17 @@
 
 .image {
 	width: 250px;
-	height: 250px;
+	max-height: 250px;
 	border-radius: 8px;
-	overflow: hidden;
+	object-fit: scale-down;
 }
 
 .description {
 	font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+	.card {
+		max-width: 100%;
+	}
 }

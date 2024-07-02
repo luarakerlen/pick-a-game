@@ -8,11 +8,12 @@
 .button {
 	background-color: #027df7;
 	border-radius: 8px;
-	padding: 1rem;
+	padding: 3rem 1rem;
 	border: none;
 	cursor: pointer;
 	color: white;
 	font-size: 1.5rem;
+	font-weight: 600;
 }
 
 .button:hover {
@@ -31,6 +32,12 @@
 
 .chosenTitle {
 	font-size: 3rem;
+	text-align: center;
+}
+
+.sectionTitle {
+	font-size: 2rem;
+	text-align: center;
 }
 
 .available {
@@ -44,4 +51,19 @@
 	flex-wrap: wrap;
 	justify-content: start;
 	gap: 1rem;
+}
+
+@media (max-width: 768px) {
+	.container {
+		padding: 1rem;
+	}
+	.button {
+		font-size: 1rem;
+	}
+	.chosenTitle {
+		font-size: 2rem;
+	}
+	.sectionTitle {
+		font-size: 1.5rem;
+	}
 }
