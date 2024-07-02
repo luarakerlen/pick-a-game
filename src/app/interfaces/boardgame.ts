@@ -1,4 +1,4 @@
-export interface BoardGame {
+export interface Boardgame {
 	name: string;
 	minPlayers: number;
 	maxPlayers: number;

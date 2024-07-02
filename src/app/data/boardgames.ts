@@ -1,6 +1,6 @@
-import { BoardGame } from '../interfaces';
+import { Boardgame } from '../interfaces';
 
-export const boardgames: BoardGame[] = [
+export const boardgames: Boardgame[] = [
 	{
 		name: 'Alieninjas - missão 2',
 		minPlayers: 2,
