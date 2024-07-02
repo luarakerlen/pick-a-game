@@ -9,17 +9,26 @@ import { CardAvailable, CardChosen, CardUnavailable } from './components';
 
 export default function Home() {
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
-	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([
-		{
-			name: 'Catan',
-			minPlayers: 3,
-			maxPlayers: 4,
-		},
-	]);
+	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
+	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([]);
 
 	function chooseRandomGame() {
-		const randomIndex = Math.floor(Math.random() * boardgames.length);
-		setRandomGame(boardgames[randomIndex]);
+		const randomIndex = Math.floor(Math.random() * availableGames.length);
+		setRandomGame(availableGames[randomIndex]);
+	}
+
+	function handleAvailableClick(boardgame: Boardgame) {
+		setAvailableGames(
+			availableGames.filter((game) => game.name !== boardgame.name)
+		);
+		setUnavailableGames([...unavailableGames, boardgame]);
+	}
+
+	function handleUnavailableClick(boardgame: Boardgame) {
+		setAvailableGames([...availableGames, boardgame]);
+		setUnavailableGames(
+			unavailableGames.filter((game) => game.name !== boardgame.name)
+		);
 	}
 
 	return (
@@ -36,10 +45,14 @@ export default function Home() {
 			)}
 
 			<div className={styles.available}>
-				<h1>Jogos disponíveis ({boardgames.length}):</h1>
+				<h1>Jogos disponíveis ({availableGames.length}):</h1>
 				<ul className={styles.availableList}>
-					{boardgames.map((game) => (
-						<CardAvailable key={game.name} boardgame={game} />
+					{availableGames.map((game) => (
+						<CardAvailable
+							key={game.name}
+							boardgame={game}
+							onClick={() => handleAvailableClick(game)}
+						/>
 					))}
 				</ul>
 			</div>
@@ -51,7 +64,11 @@ export default function Home() {
 					</h1>
 					<ul className={styles.availableList}>
 						{unavailableGames.map((game) => (
-							<CardUnavailable key={game.name} boardgame={game} />
+							<CardUnavailable
+								key={game.name}
+								boardgame={game}
+								onClick={() => handleUnavailableClick(game)}
+							/>
 						))}
 					</ul>
 				</div>

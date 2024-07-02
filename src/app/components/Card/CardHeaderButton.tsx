@@ -4,13 +4,14 @@ import styles from './styles.module.css';
 import { CiTablets1 } from 'react-icons/ci';
 import { MdBlockFlipped } from 'react-icons/md';
 
-interface CardHeaderButtonProps {
+interface CardHeaderButtonProps
+	extends React.HTMLAttributes<HTMLButtonElement> {
 	status: Status;
 }
 
-export function CardHeaderButton({ status }: CardHeaderButtonProps) {
+export function CardHeaderButton({ status, ...rest }: CardHeaderButtonProps) {
 	return (
-		<button className={styles.button}>
+		<button className={styles.button} {...rest}>
 			{status === 'available' ? (
 				<MdBlockFlipped className={styles.buttonIconAvailable} size={24} />
 			) : (
