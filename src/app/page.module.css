@@ -4,6 +4,21 @@
 	flex-direction: column;
 	gap: 2rem;
 }
+
+.button {
+	background-color: #027df7;
+	border-radius: 8px;
+	padding: 1rem;
+	border: none;
+	cursor: pointer;
+	color: white;
+	font-size: 1.5rem;
+}
+
+.button:hover {
+	background-color: #1e7fc7;
+}
+
 .chosen {
 	background-color: #f0f0f0;
 	border-radius: 8px;

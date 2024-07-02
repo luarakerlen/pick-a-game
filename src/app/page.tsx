@@ -17,7 +17,7 @@ export default function Home() {
 
 	return (
 		<div className={styles.container}>
-			<button onClick={chooseRandomGame}>
+			<button className={styles.button} onClick={chooseRandomGame}>
 				Escolher um jogo aleatoriamente
 			</button>
 
