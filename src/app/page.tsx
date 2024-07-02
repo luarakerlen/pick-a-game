@@ -5,10 +5,17 @@ import { boardgames } from './data';
 import './styles.css';
 
 import styles from './page.module.css';
-import { CardAvailable, CardChosen } from './components';
+import { CardAvailable, CardChosen, CardUnavailable } from './components';
 
 export default function Home() {
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
+	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([
+		{
+			name: 'Catan',
+			minPlayers: 3,
+			maxPlayers: 4,
+		},
+	]);
 
 	function chooseRandomGame() {
 		const randomIndex = Math.floor(Math.random() * boardgames.length);
@@ -36,6 +43,19 @@ export default function Home() {
 					))}
 				</ul>
 			</div>
+
+			{unavailableGames.length > 0 && (
+				<div className={styles.available}>
+					<h1>
+						Jogos que não devem ser escolhidos ({unavailableGames.length}):
+					</h1>
+					<ul className={styles.availableList}>
+						{unavailableGames.map((game) => (
+							<CardUnavailable key={game.name} boardgame={game} />
+						))}
+					</ul>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -8,6 +8,7 @@
 	background-color: #fff;
 	border-radius: 8px;
 	flex: 1;
+	max-width: 50%;
 }
 
 .header {
@@ -17,11 +18,13 @@
 	justify-content: center;
 	gap: 1rem;
 	padding: 0.1rem;
+	position: relative;
 }
 
 .title {
 	font-size: 1.5rem;
 	font-weight: 600;
+	max-width: 80%;
 }
 
 .button {
@@ -33,6 +36,12 @@
 	align-items: center;
 
 	background-color: transparent;
+	position: absolute;
+	right: 0;
+}
+
+.buttonIconAvailable {
+	color: #dddddd;
 }
 
 .buttonIconAvailable:hover {
