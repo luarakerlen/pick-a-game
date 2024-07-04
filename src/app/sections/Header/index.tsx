@@ -1,6 +1,7 @@
 import { FaArrowDown } from 'react-icons/fa';
 import { Boardgame } from '../../interfaces';
 import styles from './styles.module.css';
+import { useState } from 'react';
 
 interface HeaderProps {
 	availableGames: Boardgame[];
@@ -20,6 +21,7 @@ export function Header({
 	const allGames = availableGames.concat(unavailableGames);
 	const hasUnavailableGames = unavailableGames.length > 0;
 	const playersNumber = Array.from({ length: 10 }, (_, i) => i + 1);
+	const [chosenNumber, setChosenNumber] = useState(0);
 
 	function scrollToUnavailableGames() {
 		const unavailableGamesRef = document.getElementById('unavailable-games');
@@ -31,6 +33,8 @@ export function Header({
 	}
 
 	function handlePlayersNumber(playersNumber: number) {
+		setChosenNumber(playersNumber);
+
 		const newAvailableGames = allGames.filter(
 			(game) =>
 				game.minPlayers <= playersNumber && game.maxPlayers >= playersNumber
@@ -70,7 +74,10 @@ export function Header({
 				<ul>
 					{playersNumber.map((number) => (
 						<li key={number}>
-							<button onClick={() => handlePlayersNumber(number)}>
+							<button
+								className={number === chosenNumber ? styles.active : ''}
+								onClick={() => handlePlayersNumber(number)}
+							>
 								{number}
 							</button>
 						</li>

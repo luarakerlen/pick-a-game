@@ -44,6 +44,14 @@
 	width: 100%;
 }
 
+.playersNumber ul li button:hover {
+	background-color: #f7a440;
+}
+
+.playersNumber ul li button.active {
+	background-color: #f7a440;
+}
+
 .mainButton {
 	background-color: #027df7;
 	border-radius: 8px;
