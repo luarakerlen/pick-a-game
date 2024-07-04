@@ -6,11 +6,17 @@ import './styles.css';
 
 import styles from './page.module.css';
 import { CardAvailable, CardChosen, CardUnavailable } from './components';
+import { FaArrowCircleUp, FaArrowDown } from 'react-icons/fa';
 
 export default function Home() {
+	const SCROLL_THRESHOLD = 250;
+
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
 	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
 	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([]);
+	const [visible, setVisible] = useState(false);
+
+	const hasUnavailableGames = unavailableGames.length > 0;
 
 	function chooseRandomGame() {
 		const randomIndex = Math.floor(Math.random() * availableGames.length);
@@ -31,8 +37,46 @@ export default function Home() {
 		);
 	}
 
+	function toggleVisible() {
+		const scrolled = document.documentElement.scrollTop;
+		if (scrolled > SCROLL_THRESHOLD) {
+			setVisible(true);
+		} else if (scrolled <= SCROLL_THRESHOLD) {
+			setVisible(false);
+		}
+	}
+
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	}
+
+	window.addEventListener('scroll', toggleVisible);
+
 	return (
 		<div className={styles.container}>
+			<button
+				className={styles.arrow__up__button}
+				onClick={scrollToTop}
+				style={{ display: visible ? 'inline' : 'none' }}
+			>
+				<FaArrowCircleUp size={40} />
+			</button>
+
+			{hasUnavailableGames && (
+				<div className={styles.header}>
+					<ul>
+						<li>
+							<a className={styles.header__link} href='#unavailable-boardgames'>
+								Ver jogos indisponíveis <FaArrowDown />
+							</a>
+						</li>
+					</ul>
+				</div>
+			)}
+
 			<button className={styles.button} onClick={chooseRandomGame}>
 				Escolher um jogo aleatoriamente
 			</button>
@@ -44,8 +88,10 @@ export default function Home() {
 				</div>
 			)}
 
-			<div className={styles.available}>
-				<h1 className={styles.sectionTitle}>Jogos disponíveis ({availableGames.length}):</h1>
+			<div id='available-boardgames' className={styles.available}>
+				<h1 className={styles.sectionTitle}>
+					Jogos disponíveis ({availableGames.length}):
+				</h1>
 				<ul className={styles.availableList}>
 					{availableGames.map((game) => (
 						<CardAvailable
@@ -57,8 +103,8 @@ export default function Home() {
 				</ul>
 			</div>
 
-			{unavailableGames.length > 0 && (
-				<div className={styles.available}>
+			{hasUnavailableGames && (
+				<div id='unavailable-boardgames' className={styles.available}>
 					<h1 className={styles.sectionTitle}>
 						Jogos que não devem ser escolhidos ({unavailableGames.length}):
 					</h1>
