@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Boardgame } from './interfaces';
 import { boardgames } from './data';
 import './styles.css';
@@ -10,6 +10,7 @@ import { FaArrowCircleUp, FaArrowDown } from 'react-icons/fa';
 
 export default function Home() {
 	const SCROLL_THRESHOLD = 250;
+	const unavailableGamesRef = useRef<HTMLDivElement | null>(null);
 
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
 	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
@@ -55,6 +56,12 @@ export default function Home() {
 
 	window.addEventListener('scroll', toggleVisible);
 
+	function scrollToUnavailableGames() {
+		unavailableGamesRef.current?.scrollIntoView({
+			behavior: 'smooth',
+		});
+	}
+
 	return (
 		<div className={styles.container}>
 			<button
@@ -69,7 +76,10 @@ export default function Home() {
 				<div className={styles.header}>
 					<ul>
 						<li>
-							<a className={styles.header__link} href='#unavailable-boardgames'>
+							<a
+								className={styles.header__link}
+								onClick={scrollToUnavailableGames}
+							>
 								Ver jogos indisponíveis <FaArrowDown />
 							</a>
 						</li>
@@ -104,7 +114,11 @@ export default function Home() {
 			</div>
 
 			{hasUnavailableGames && (
-				<div id='unavailable-boardgames' className={styles.available}>
+				<div
+					ref={unavailableGamesRef}
+					id='unavailable-boardgames'
+					className={styles.available}
+				>
 					<h1 className={styles.sectionTitle}>
 						Jogos que não devem ser escolhidos ({unavailableGames.length}):
 					</h1>
