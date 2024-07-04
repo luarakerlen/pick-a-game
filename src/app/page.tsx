@@ -1,29 +1,25 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { FaArrowCircleUp } from 'react-icons/fa';
 import { Boardgame } from './interfaces';
 import { boardgames } from './data';
-import { CardAvailable, CardChosen, CardUnavailable } from './components';
-import { FaArrowCircleUp, FaArrowDown } from 'react-icons/fa';
+import {
+	AvailableGames,
+	ChosenGame,
+	Header,
+	UnavailableGames,
+} from './sections';
 
 import styles from './page.module.css';
 import './styles.css';
-import { AvailableGames, UnavailableGames } from './sections';
 
 export default function Home() {
 	const SCROLL_THRESHOLD = 250;
-	const unavailableGamesRef = useRef<HTMLDivElement | null>(null);
 
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
 	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
 	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([]);
 	const [visible, setVisible] = useState(false);
-
-	const hasUnavailableGames = unavailableGames.length > 0;
-
-	function chooseRandomGame() {
-		const randomIndex = Math.floor(Math.random() * availableGames.length);
-		setRandomGame(availableGames[randomIndex]);
-	}
 
 	function toggleVisible() {
 		const scrolled = document.documentElement.scrollTop;
@@ -43,15 +39,6 @@ export default function Home() {
 
 	window.addEventListener('scroll', toggleVisible);
 
-	function scrollToUnavailableGames() {
-		const unavailableGamesRef = document.getElementById('unavailable-games');
-		if (unavailableGamesRef) {
-			unavailableGamesRef.scrollIntoView({
-				behavior: 'smooth',
-			});
-		}
-	}
-
 	return (
 		<div className={styles.container}>
 			<button
@@ -62,24 +49,13 @@ export default function Home() {
 				<FaArrowCircleUp size={40} />
 			</button>
 
-			{hasUnavailableGames && (
-				<div className={styles.header}>
-					<a className={styles.header__link} onClick={scrollToUnavailableGames}>
-						Ver jogos indisponíveis <FaArrowDown />
-					</a>
-				</div>
-			)}
+			<Header
+				availableGames={availableGames}
+				unavailableGames={unavailableGames}
+				setRandomGame={setRandomGame}
+			/>
 
-			<button className={styles.button} onClick={chooseRandomGame}>
-				Escolher um jogo aleatoriamente
-			</button>
-
-			{randomGame && (
-				<div className={styles.chosen}>
-					<h1 className={styles.chosenTitle}>Jogo escolhido</h1>
-					<CardChosen boardgame={randomGame} />
-				</div>
-			)}
+			{randomGame && <ChosenGame randomGame={randomGame} />}
 
 			<AvailableGames
 				availableGames={availableGames}

@@ -1,0 +1,32 @@
+.unavailableGames__link__container {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.unavailableGames__link {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.button {
+	background-color: #027df7;
+	border-radius: 8px;
+	padding: 3rem 1rem;
+	border: none;
+	cursor: pointer;
+	color: white;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+.button:hover {
+	background-color: #1e7fc7;
+}
+
+@media (max-width: 768px) {
+	.button {
+		font-size: 1rem;
+	}
+}
