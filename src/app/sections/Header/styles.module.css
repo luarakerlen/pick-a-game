@@ -25,7 +25,7 @@
 
 .playersNumber ul {
 	display: grid;
-	gap: 1rem;
+	gap: 0.5rem;
 	grid-template-columns: repeat(10, 1fr);
 	width: 100%;
 }
@@ -41,7 +41,6 @@
 	padding: 1rem;
 	cursor: pointer;
 
-	min-width: 4rem;
 	width: 100%;
 }
 
