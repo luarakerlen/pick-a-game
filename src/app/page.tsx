@@ -44,7 +44,7 @@ export default function Home() {
 			<button
 				className={styles.arrow__up__button}
 				onClick={scrollToTop}
-				style={{ display: visible ? 'inline' : 'none' }}
+				style={{ display: visible ? 'flex' : 'none' }}
 			>
 				<FaArrowCircleUp size={40} />
 			</button>
@@ -53,6 +53,8 @@ export default function Home() {
 				availableGames={availableGames}
 				unavailableGames={unavailableGames}
 				setRandomGame={setRandomGame}
+				setAvailableGames={setAvailableGames}
+				setUnavailableGames={setUnavailableGames}
 			/>
 
 			{randomGame && <ChosenGame randomGame={randomGame} />}

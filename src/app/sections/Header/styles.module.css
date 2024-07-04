@@ -10,7 +10,42 @@
 	gap: 0.5rem;
 }
 
-.button {
+.playersNumber {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.playersNumber h4 {
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+.playersNumber ul {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(10, 1fr);
+	width: 100%;
+}
+
+.playersNumber ul li button {
+	border: none;
+	border-radius: 0.5rem;
+	color: white;
+	background-color: #da6506;
+	font-size: 1.5rem;
+	font-weight: 600;
+
+	padding: 1rem;
+	cursor: pointer;
+
+	min-width: 4rem;
+	width: 100%;
+}
+
+.mainButton {
 	background-color: #027df7;
 	border-radius: 8px;
 	padding: 3rem 1rem;
@@ -21,12 +56,18 @@
 	font-weight: 600;
 }
 
-.button:hover {
+.mainButton:hover {
 	background-color: #1e7fc7;
 }
 
 @media (max-width: 768px) {
-	.button {
+	.mainButton {
 		font-size: 1rem;
+	}
+}
+
+@media (max-width: 844px) {
+	.playersNumber ul {
+		grid-template-columns: repeat(5, 1fr);
 	}
 }
