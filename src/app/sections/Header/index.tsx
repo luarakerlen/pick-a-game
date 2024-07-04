@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 interface HeaderProps {
 	availableGames: Boardgame[];
 	unavailableGames: Boardgame[];
-	setRandomGame: (value: Boardgame) => void;
+	setRandomGame: (value: Boardgame | null) => void;
 	setAvailableGames: (value: Boardgame[]) => void;
 	setUnavailableGames: (value: Boardgame[]) => void;
 }
@@ -35,6 +35,13 @@ export function Header({
 				behavior: 'smooth',
 			});
 		}
+	}
+
+	function handleReset() {
+		setChosenPlayersNumber(null);
+		setAvailableGames(allGames);
+		setUnavailableGames([]);
+		setRandomGame(null);
 	}
 
 	function handlePlayersNumber(playersNumber: number) {
@@ -75,6 +82,7 @@ export function Header({
 					Ver jogos indisponíveis <FaArrowDown />
 				</button>
 				<button
+					onClick={handleReset}
 					style={{
 						display: shouldShowHeaderButtons ? 'flex' : 'none',
 					}}
