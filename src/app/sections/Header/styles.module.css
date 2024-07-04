@@ -1,10 +1,15 @@
-.unavailableGames__link__container {
+.headerButtons {
 	display: flex;
 	justify-content: center;
-	gap: 1rem;
+	gap: 2rem;
 }
 
-.unavailableGames__link {
+.headerButtons button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	text-decoration: underline;
+
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
@@ -63,13 +68,27 @@
 	font-weight: 600;
 }
 
-.mainButton:hover {
+.mainButton:disabled {
+	background-color: #b3b3b3;
+	cursor: not-allowed;
+}
+
+.mainButton:hover::not(:disabled) {
 	background-color: #1e7fc7;
+}
+
+.mainButton p {
+	font-size: 1rem;
+	font-weight: 400;
 }
 
 @media (max-width: 768px) {
 	.mainButton {
 		font-size: 1rem;
+	}
+
+	.mainButton p {
+		font-size: 0.8rem;
 	}
 }
 

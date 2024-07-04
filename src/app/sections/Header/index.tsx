@@ -1,7 +1,8 @@
-import { FaArrowDown } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaArrowDown } from 'react-icons/fa6';
+import { GrPowerReset } from 'react-icons/gr';
 import { Boardgame } from '../../interfaces';
 import styles from './styles.module.css';
-import { useState } from 'react';
 
 interface HeaderProps {
 	availableGames: Boardgame[];
@@ -18,10 +19,14 @@ export function Header({
 	setAvailableGames,
 	setUnavailableGames,
 }: HeaderProps) {
+	const playersNumber = Array.from({ length: 10 }, (_, i) => i + 1);
+	const [chosenPlayersNumber, setChosenPlayersNumber] = useState<number | null>(
+		null
+	);
+
 	const allGames = availableGames.concat(unavailableGames);
 	const hasUnavailableGames = unavailableGames.length > 0;
-	const playersNumber = Array.from({ length: 10 }, (_, i) => i + 1);
-	const [chosenNumber, setChosenNumber] = useState(0);
+	const shouldShowHeaderButtons = hasUnavailableGames || chosenPlayersNumber;
 
 	function scrollToUnavailableGames() {
 		const unavailableGamesRef = document.getElementById('unavailable-games');
@@ -33,7 +38,7 @@ export function Header({
 	}
 
 	function handlePlayersNumber(playersNumber: number) {
-		setChosenNumber(playersNumber);
+		setChosenPlayersNumber(playersNumber);
 
 		const newAvailableGames = allGames.filter(
 			(game) =>
@@ -56,17 +61,26 @@ export function Header({
 	return (
 		<>
 			<div
+				className={styles.headerButtons}
 				style={{
-					display: hasUnavailableGames ? 'flex' : 'none',
+					display: shouldShowHeaderButtons ? 'flex' : 'none',
 				}}
-				className={styles.unavailableGames__link__container}
 			>
-				<a
-					className={styles.unavailableGames__link}
+				<button
 					onClick={scrollToUnavailableGames}
+					style={{
+						display: hasUnavailableGames ? 'flex' : 'none',
+					}}
 				>
 					Ver jogos indisponíveis <FaArrowDown />
-				</a>
+				</button>
+				<button
+					style={{
+						display: shouldShowHeaderButtons ? 'flex' : 'none',
+					}}
+				>
+					Resetar <GrPowerReset />
+				</button>
 			</div>
 
 			<div className={styles.playersNumber}>
@@ -75,7 +89,7 @@ export function Header({
 					{playersNumber.map((number) => (
 						<li key={number}>
 							<button
-								className={number === chosenNumber ? styles.active : ''}
+								className={number === chosenPlayersNumber ? styles.active : ''}
 								onClick={() => handlePlayersNumber(number)}
 							>
 								{number}
@@ -85,8 +99,19 @@ export function Header({
 				</ul>
 			</div>
 
-			<button className={styles.mainButton} onClick={chooseRandomGame}>
+			<button
+				className={styles.mainButton}
+				onClick={chooseRandomGame}
+				disabled={!chosenPlayersNumber}
+			>
 				Escolher um jogo aleatoriamente
+				<p
+					style={{
+						display: chosenPlayersNumber ? 'none' : 'block',
+					}}
+				>
+					(escolha a quantidade de jogadores primeiro)
+				</p>
 			</button>
 		</>
 	);
