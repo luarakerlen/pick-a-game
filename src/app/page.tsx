@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaArrowCircleUp } from 'react-icons/fa';
 import { Boardgame } from './interfaces';
 import { boardgames } from './data';
@@ -37,7 +37,9 @@ export default function Home() {
 		});
 	}
 
-	window.addEventListener('scroll', toggleVisible);
+	useEffect(() => {
+		window.addEventListener('scroll', toggleVisible);
+	}, []);
 
 	return (
 		<div className={styles.container}>
