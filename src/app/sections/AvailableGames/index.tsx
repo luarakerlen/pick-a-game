@@ -1,8 +1,8 @@
-import styles from '../sections.module.css';
 import { CardAvailable } from '../../components';
 import { Boardgame } from '../../interfaces';
+import { ListSection } from '../ListSection';
 
-interface AvailableGamesProps {
+interface AvailableGamesProps extends React.HTMLAttributes<HTMLDivElement> {
 	availableGames: Boardgame[];
 	unavailableGames: Boardgame[];
 	setAvailableGames: (value: Boardgame[]) => void;
@@ -14,6 +14,7 @@ export function AvailableGames({
 	unavailableGames,
 	setAvailableGames,
 	setUnavailableGames,
+	...rest
 }: AvailableGamesProps) {
 	function handleAvailableClick(boardgame: Boardgame) {
 		setAvailableGames(
@@ -23,19 +24,12 @@ export function AvailableGames({
 	}
 
 	return (
-		<div id='available-boardgames' className={styles.container}>
-			<h1 className={styles.title}>
-				Jogos disponíveis ({availableGames.length}):
-			</h1>
-			<ul className={styles.list}>
-				{availableGames.map((game) => (
-					<CardAvailable
-						key={game.name}
-						boardgame={game}
-						onClick={() => handleAvailableClick(game)}
-					/>
-				))}
-			</ul>
-		</div>
+		<ListSection
+			{...rest}
+			title={`Jogos disponíveis (${availableGames.length})`}
+			games={availableGames}
+			handleClick={handleAvailableClick}
+			Card={CardAvailable}
+		/>
 	);
 }

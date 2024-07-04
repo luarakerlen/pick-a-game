@@ -2,11 +2,12 @@
 import { useRef, useState } from 'react';
 import { Boardgame } from './interfaces';
 import { boardgames } from './data';
-import './styles.css';
-
-import styles from './page.module.css';
 import { CardAvailable, CardChosen, CardUnavailable } from './components';
 import { FaArrowCircleUp, FaArrowDown } from 'react-icons/fa';
+
+import styles from './page.module.css';
+import './styles.css';
+import { AvailableGames, UnavailableGames } from './sections';
 
 export default function Home() {
 	const SCROLL_THRESHOLD = 250;
@@ -22,20 +23,6 @@ export default function Home() {
 	function chooseRandomGame() {
 		const randomIndex = Math.floor(Math.random() * availableGames.length);
 		setRandomGame(availableGames[randomIndex]);
-	}
-
-	function handleAvailableClick(boardgame: Boardgame) {
-		setAvailableGames(
-			availableGames.filter((game) => game.name !== boardgame.name)
-		);
-		setUnavailableGames([...unavailableGames, boardgame]);
-	}
-
-	function handleUnavailableClick(boardgame: Boardgame) {
-		setAvailableGames([...availableGames, boardgame]);
-		setUnavailableGames(
-			unavailableGames.filter((game) => game.name !== boardgame.name)
-		);
 	}
 
 	function toggleVisible() {
@@ -57,9 +44,12 @@ export default function Home() {
 	window.addEventListener('scroll', toggleVisible);
 
 	function scrollToUnavailableGames() {
-		unavailableGamesRef.current?.scrollIntoView({
-			behavior: 'smooth',
-		});
+		const unavailableGamesRef = document.getElementById('unavailable-games');
+		if (unavailableGamesRef) {
+			unavailableGamesRef.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
 	}
 
 	return (
@@ -74,16 +64,9 @@ export default function Home() {
 
 			{hasUnavailableGames && (
 				<div className={styles.header}>
-					<ul>
-						<li>
-							<a
-								className={styles.header__link}
-								onClick={scrollToUnavailableGames}
-							>
-								Ver jogos indisponíveis <FaArrowDown />
-							</a>
-						</li>
-					</ul>
+					<a className={styles.header__link} onClick={scrollToUnavailableGames}>
+						Ver jogos indisponíveis <FaArrowDown />
+					</a>
 				</div>
 			)}
 
@@ -98,41 +81,20 @@ export default function Home() {
 				</div>
 			)}
 
-			<div id='available-boardgames' className={styles.available}>
-				<h1 className={styles.sectionTitle}>
-					Jogos disponíveis ({availableGames.length}):
-				</h1>
-				<ul className={styles.availableList}>
-					{availableGames.map((game) => (
-						<CardAvailable
-							key={game.name}
-							boardgame={game}
-							onClick={() => handleAvailableClick(game)}
-						/>
-					))}
-				</ul>
-			</div>
+			<AvailableGames
+				availableGames={availableGames}
+				unavailableGames={unavailableGames}
+				setAvailableGames={setAvailableGames}
+				setUnavailableGames={setUnavailableGames}
+			/>
 
-			{hasUnavailableGames && (
-				<div
-					ref={unavailableGamesRef}
-					id='unavailable-boardgames'
-					className={styles.available}
-				>
-					<h1 className={styles.sectionTitle}>
-						Jogos que não devem ser escolhidos ({unavailableGames.length}):
-					</h1>
-					<ul className={styles.availableList}>
-						{unavailableGames.map((game) => (
-							<CardUnavailable
-								key={game.name}
-								boardgame={game}
-								onClick={() => handleUnavailableClick(game)}
-							/>
-						))}
-					</ul>
-				</div>
-			)}
+			<UnavailableGames
+				id='unavailable-games'
+				availableGames={availableGames}
+				unavailableGames={unavailableGames}
+				setAvailableGames={setAvailableGames}
+				setUnavailableGames={setUnavailableGames}
+			/>
 		</div>
 	);
 }
