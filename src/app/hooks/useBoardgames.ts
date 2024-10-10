@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Boardgame } from '../interfaces';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import db from '../../../configuration';
+import Swal from 'sweetalert2';
 // import { boardgames } from '../data';
 
 export function useBoardgames() {
@@ -24,11 +25,22 @@ export function useBoardgames() {
 
 	const addGame = async (newGame: Boardgame) => {
 		if (boardgames.some((game) => game.name === newGame.name)) {
-			alert('Esse jogo já está cadastrado!');
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Esse jogo já está cadastrado!',
+			});
 		} else {
 			await addDoc(collection(db, 'games'), newGame);
 			setBoardgames([newGame, ...boardgames]);
 			setAvailableGamesOrdered([newGame, ...availableGames]);
+
+			Swal.fire({
+				icon: 'success',
+				title: 'Jogo cadastrado com sucesso!',
+				showConfirmButton: false,
+				timer: 2000,
+			});
 		}
 	};
 
