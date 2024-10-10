@@ -24,7 +24,12 @@ export function useBoardgames() {
 	}
 
 	const addGame = async (newGame: Boardgame) => {
-		if (boardgames.some((game) => game.name === newGame.name)) {
+		if (
+			boardgames.some(
+				(game) =>
+					game.name.toLocaleLowerCase() === newGame.name.toLocaleLowerCase()
+			)
+		) {
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
