@@ -8,6 +8,8 @@ import {
 	useMediaQuery,
 	InputLabel,
 	Input,
+	DialogActions,
+	Button,
 } from '@mui/material';
 
 interface ModalProps {
@@ -43,7 +45,9 @@ export function Modal({ open, onClose }: ModalProps) {
 					}}
 				>
 					<FormControl sx={{ mt: 2 }}>
-						<InputLabel htmlFor='name' required>Nome do jogo</InputLabel>
+						<InputLabel htmlFor='name' required>
+							Nome do jogo
+						</InputLabel>
 						<Input id='name' type='text' />
 					</FormControl>
 					<Box
@@ -54,12 +58,16 @@ export function Modal({ open, onClose }: ModalProps) {
 							gap: 2,
 						}}
 					>
-						<FormControl sx={{ width: '100%'}}>
-							<InputLabel htmlFor='minPlayers' required>Mínimo de jogadores</InputLabel>
+						<FormControl sx={{ width: '100%' }}>
+							<InputLabel htmlFor='minPlayers' required>
+								Mínimo de jogadores
+							</InputLabel>
 							<Input id='minPlayers' type='number' />
 						</FormControl>
-						<FormControl sx={{ width: '100%'}}>
-							<InputLabel htmlFor='maxPlayers' required>Máximo de jogadores</InputLabel>
+						<FormControl sx={{ width: '100%' }}>
+							<InputLabel htmlFor='maxPlayers' required>
+								Máximo de jogadores
+							</InputLabel>
 							<Input id='maxPlayers' type='number' />
 						</FormControl>
 					</Box>
@@ -69,6 +77,12 @@ export function Modal({ open, onClose }: ModalProps) {
 					</FormControl>
 				</Box>
 			</DialogContent>
+			<DialogActions>
+				<Button onClick={onClose}>Cancelar</Button>
+				<Button onClick={onClose} variant='contained'>
+					Adicionar
+				</Button>
+			</DialogActions>
 		</Dialog>
 	);
 }
