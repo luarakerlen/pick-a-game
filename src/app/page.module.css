@@ -1,7 +1,7 @@
-.arrow__up__button {
+.arrow__up__button,
+.plus__button {
 	position: fixed;
 	bottom: 1rem;
-	right: 1rem;
 	background-color: #027df7;
 	border-radius: 50%;
 	padding: 1rem;
@@ -10,7 +10,15 @@
 	color: white;
 	align-items: center;
 	z-index: 1000;
+}
+
+.arrow__up__button {
+	right: 1rem;
 	transition: display 1s;
+}
+
+.plus__button {
+	left: 1rem;
 }
 
 .container {

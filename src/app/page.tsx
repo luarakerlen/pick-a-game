@@ -1,8 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { FaArrowCircleUp } from 'react-icons/fa';
-import { Boardgame } from './interfaces';
-import { boardgames } from './data';
+import { FaArrowCircleUp, FaPlusCircle } from 'react-icons/fa';
 import {
 	AvailableGames,
 	ChosenGame,
@@ -12,13 +10,21 @@ import {
 
 import styles from './page.module.css';
 import './styles.css';
+import { useBoardgames } from './hooks';
 
 export default function Home() {
 	const SCROLL_THRESHOLD = 250;
 
-	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
-	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
-	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([]);
+	const {
+		availableGames,
+		setAvailableGamesOrdered,
+		unavailableGames,
+		setUnavailableGamesOrdered,
+		randomGame,
+		setRandomGame,
+		addGame,
+	} = useBoardgames();
+
 	const [visible, setVisible] = useState(false);
 
 	function toggleVisible() {
@@ -37,6 +43,15 @@ export default function Home() {
 		});
 	}
 
+	function handleAddGame() {
+		// addGame({
+		// 	name: 'Novo jogo',
+		// 	minPlayers: 1,
+		// 	maxPlayers: 8,
+		// 	image: 'https://via.placeholder.com/150',
+		// });
+	}
+
 	useEffect(() => {
 		window.addEventListener('scroll', toggleVisible);
 	}, []);
@@ -51,12 +66,16 @@ export default function Home() {
 				<FaArrowCircleUp size={40} />
 			</button>
 
+			<button className={styles.plus__button} onClick={handleAddGame}>
+				<FaPlusCircle size={40} />
+			</button>
+
 			<Header
 				availableGames={availableGames}
 				unavailableGames={unavailableGames}
 				setRandomGame={setRandomGame}
-				setAvailableGames={setAvailableGames}
-				setUnavailableGames={setUnavailableGames}
+				setAvailableGames={setAvailableGamesOrdered}
+				setUnavailableGames={setUnavailableGamesOrdered}
 			/>
 
 			{randomGame && <ChosenGame randomGame={randomGame} />}
@@ -64,16 +83,16 @@ export default function Home() {
 			<AvailableGames
 				availableGames={availableGames}
 				unavailableGames={unavailableGames}
-				setAvailableGames={setAvailableGames}
-				setUnavailableGames={setUnavailableGames}
+				setAvailableGames={setAvailableGamesOrdered}
+				setUnavailableGames={setUnavailableGamesOrdered}
 			/>
 
 			<UnavailableGames
 				id='unavailable-games'
 				availableGames={availableGames}
 				unavailableGames={unavailableGames}
-				setAvailableGames={setAvailableGames}
-				setUnavailableGames={setUnavailableGames}
+				setAvailableGames={setAvailableGamesOrdered}
+				setUnavailableGames={setUnavailableGamesOrdered}
 			/>
 		</div>
 	);
