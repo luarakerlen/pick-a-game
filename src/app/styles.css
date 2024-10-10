@@ -4,3 +4,7 @@
 	text-decoration: none;
 	list-style: none;
 }
+
+.swal2-container-add-game {
+	z-index: 10000 !important;
+}

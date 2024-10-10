@@ -15,9 +15,10 @@ import {
 interface ModalProps {
 	open: boolean;
 	onClose: () => void;
+	onConfirm: (form: HTMLFormElement) => void;
 }
 
-export function Modal({ open, onClose }: ModalProps) {
+export function Modal({ open, onClose, onConfirm }: ModalProps) {
 	const fullScreen = useMediaQuery('(max-width: 600px)');
 
 	return (
@@ -27,6 +28,14 @@ export function Modal({ open, onClose }: ModalProps) {
 			fullWidth
 			maxWidth='xs'
 			fullScreen={fullScreen}
+			PaperProps={{
+				component: 'form',
+				onSubmit: (e: React.FormEvent<HTMLFormElement>) => {
+					e.preventDefault();
+					const form = e.target as HTMLFormElement;
+					onConfirm(form);
+				},
+			}}
 		>
 			<DialogTitle>Cadastrar novo jogo</DialogTitle>
 			<DialogContent>
@@ -36,7 +45,6 @@ export function Modal({ open, onClose }: ModalProps) {
 
 				<Box
 					component='form'
-					noValidate
 					autoComplete='off'
 					sx={{
 						display: 'flex',
@@ -79,7 +87,7 @@ export function Modal({ open, onClose }: ModalProps) {
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={onClose}>Cancelar</Button>
-				<Button onClick={onClose} variant='contained'>
+				<Button type='submit' variant='contained'>
 					Adicionar
 				</Button>
 			</DialogActions>

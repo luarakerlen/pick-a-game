@@ -11,6 +11,7 @@ import {
 import styles from './page.module.css';
 import './styles.css';
 import { useBoardgames } from './hooks';
+import { Modal } from './components';
 
 export default function Home() {
 	const SCROLL_THRESHOLD = 250;
@@ -22,7 +23,10 @@ export default function Home() {
 		setUnavailableGamesOrdered,
 		randomGame,
 		setRandomGame,
-		addGame,
+		handleAddGame,
+		isOpen,
+		onOpen,
+		onClose,
 	} = useBoardgames();
 
 	const [visible, setVisible] = useState(false);
@@ -43,15 +47,6 @@ export default function Home() {
 		});
 	}
 
-	function handleAddGame() {
-		// addGame({
-		// 	name: 'Novo jogo',
-		// 	minPlayers: 1,
-		// 	maxPlayers: 8,
-		// 	image: 'https://via.placeholder.com/150',
-		// });
-	}
-
 	useEffect(() => {
 		window.addEventListener('scroll', toggleVisible);
 	}, []);
@@ -66,9 +61,11 @@ export default function Home() {
 				<FaArrowCircleUp size={40} />
 			</button>
 
-			<button className={styles.plus__button} onClick={handleAddGame}>
+			<button className={styles.plus__button} onClick={onOpen}>
 				<FaPlusCircle size={40} />
 			</button>
+
+			<Modal open={isOpen} onClose={onClose} onConfirm={handleAddGame} />
 
 			<Header
 				availableGames={availableGames}

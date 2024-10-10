@@ -3,6 +3,7 @@ import { Boardgame } from '../interfaces';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import db from '../../../configuration';
 import Swal from 'sweetalert2';
+import '../styles.css';
 // import { boardgames } from '../data';
 
 export function useBoardgames() {
@@ -10,6 +11,15 @@ export function useBoardgames() {
 	const [availableGames, setAvailableGames] = useState<Boardgame[]>(boardgames);
 	const [unavailableGames, setUnavailableGames] = useState<Boardgame[]>([]);
 	const [randomGame, setRandomGame] = useState<Boardgame | null>(null);
+	const [isOpen, setIsOpen] = useState(false);
+
+	function onOpen() {
+		setIsOpen(true);
+	}
+
+	function onClose() {
+		setIsOpen(false);
+	}
 
 	function setAvailableGamesOrdered(availableGames: Boardgame[]) {
 		setAvailableGames(
@@ -49,6 +59,39 @@ export function useBoardgames() {
 		}
 	};
 
+	function handleAddGame(form: HTMLFormElement) {
+		const name = form.querySelector('#name') as HTMLInputElement;
+		const minPlayers = form.querySelector('#minPlayers') as HTMLInputElement;
+		const maxPlayers = form.querySelector('#maxPlayers') as HTMLInputElement;
+		const image = form.querySelector('#image') as HTMLInputElement;
+
+		if (
+			name.value.trim() === '' ||
+			minPlayers.value.trim() === '' ||
+			maxPlayers.value.trim() === ''
+		) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Preencha todos os campos obrigatórios!',
+				customClass: {
+					container: 'swal2-container-add-game',
+				}
+			});
+			return;
+		}
+
+		const newGame = {
+			name: name.value,
+			minPlayers: Number(minPlayers.value),
+			maxPlayers: Number(maxPlayers.value),
+			image: image.value,
+		};
+
+		addGame(newGame);
+		onClose();
+	}
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const querySnapshot = await getDocs(collection(db, 'games'));
@@ -71,6 +114,9 @@ export function useBoardgames() {
 		setUnavailableGamesOrdered,
 		randomGame,
 		setRandomGame,
-		addGame,
+		handleAddGame,
+		isOpen,
+		onOpen,
+		onClose,
 	};
 }
