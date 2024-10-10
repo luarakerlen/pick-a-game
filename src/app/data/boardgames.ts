@@ -76,6 +76,13 @@ export const boardgames: Boardgame[] = [
 			'https://m.media-amazon.com/images/I/71WSRBtnhrL._AC_UF350,350_QL80_.jpg',
 	},
 	{
+		name: 'Córdoba',
+		minPlayers: 2,
+		maxPlayers: 2,
+		image:
+			'https://67287.cdn.simplo7.net/static/67287/sku/jogos-de-tabuleiro-e-cardgames-jogo-cordoba-p-1720124485376.jpg',
+	},
+	{
 		name: 'Diversity',
 		minPlayers: 2,
 		maxPlayers: 4,
@@ -145,6 +152,27 @@ export const boardgames: Boardgame[] = [
 			'https://m.media-amazon.com/images/I/61v4AhE7GIL._AC_UF894,1000_QL80_.jpg',
 	},
 	{
+		name: 'Jaipur',
+		minPlayers: 2,
+		maxPlayers: 2,
+		image:
+			'https://down-br.img.susercontent.com/file/sg-11134201-7rd6l-lvzvhshaxh2370',
+	},
+	{
+		name: 'Kariba',
+		minPlayers: 2,
+		maxPlayers: 4,
+		image:
+			'https://uploads.comparajogos.com.br/original/2X/c/c2b8c398f7c526f1fc9b6144379a76e193a98f3d.jpeg',
+	},
+	{
+		name: 'Kingdomino',
+		minPlayers: 2,
+		maxPlayers: 4,
+		image:
+			'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR45vaWYfCvqNl1NVA4OPt68i1mJZcjkaVZ6g&s',
+	},
+	{
 		name: 'Klask',
 		minPlayers: 2,
 		maxPlayers: 2,
@@ -212,6 +240,13 @@ export const boardgames: Boardgame[] = [
 		maxPlayers: 6,
 		image:
 			'https://uploads.comparajogos.com.br/original/2X/f/f5f9d1d7dbbabf57613acab2b9e22f124242eadd.jpeg',
+	},
+	{
+		name: 'Qui quitanda',
+		minPlayers: 1,
+		maxPlayers: 4,
+		image:
+			'https://a-static.mlcdn.com.br/470x352/qui-quitanda-pocket-micro-jogos-papergames/bandecole/ppgquiq/face35f3d28cd28091c74c750b0f9b3b.jpeg',
 	},
 	{
 		name: 'Scotland Yard',
